@@ -41,6 +41,8 @@ oop-school-library is a project that manages school data built using ruby.
 ### Key Features <a name="key-features"></a>
 
 - independent classes
+- Use the "Decorator" design pattern
+- Set up associations
 
 
 <!-- GETTING STARTED -->
@@ -90,8 +92,6 @@ gem install
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- Use the "Decorator" design pattern
-- Set up associations
 - Add basic UI.
 - Refactor the code
 - Preserve data
