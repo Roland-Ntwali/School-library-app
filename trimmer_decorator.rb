@@ -1,12 +1,9 @@
 require_relative 'base_decorator'
 
-class Teacher < Person
-  def initialize(specialization, age, name = 'Unknown', parent_permission: true)
-    super(age, name, parent_permission: parent_permission)
-    @specialization = specialization
-  end
+class TrimmerDecorator < BaseDecorator
+  def correct_name
+    return @nameable_obj.correct_name[0..9] unless super.length <= 10
 
-  def can_use_services?
-    true
+    super
   end
 end
