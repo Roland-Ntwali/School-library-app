@@ -9,7 +9,8 @@ def load_books
   if File.exist?('./data/books.json')
     file = File.open('./data/books.json')
 
-    if file.size.zero?
+    # File.empty?(path)
+    if File.empty?('./data/books.json')
       'If this is your first time using our app, kindly add some books first.'
     else
       books = JSON.parse(File.read('./data/books.json'))
@@ -32,7 +33,7 @@ def save_book(title, author)
   if File.exist?('./data/books.json')
     file = File.open('./data/books.json')
 
-    if file.size.zero?
+    if File.empty?('./data/books.json')
       book = [obj]
     else
       book = JSON.parse(File.read('./data/books.json'))
@@ -81,7 +82,7 @@ def save_student(age, name, parent_permission)
   if File.exist?('./data/people.json')
     file = File.open('./data/people.json')
 
-    if file.size.zero?
+    if File.empty?('./data/people.json')
       student = [obj]
     else
       student = JSON.parse(File.read('./data/people.json'))
@@ -108,7 +109,7 @@ def save_teacher(specialization, age, name)
   if File.exist?('./data/people.json')
     file = File.open('./data/people.json')
 
-    if file.size.zero?
+    if File.empty?('./data/people.json')
       teacher = [obj]
     else
       teacher = JSON.parse(File.read('./data/people.json'))
@@ -127,7 +128,7 @@ def load_rentals
   if File.exist?('./data/rentals.json')
     file = File.open('./data/rentals.json')
 
-    if file.size.zero?
+    if File.empty?('./data/rentals.json')
       puts 'Please add some books first'
     else
       rentals = JSON.parse(File.read('./data/rentals.json'))
@@ -152,7 +153,7 @@ def save_rentals(date, book, person)
   if File.exist?('./data/rentals.json')
     file = File.open('./data/rentals.json')
 
-    if file.size.zero?
+    if File.empty?('./data/rentals.json')
       rental = [obj]
     else
       rental = JSON.parse(File.read('./data/rentals.json'))
