@@ -69,3 +69,29 @@ def load_people
     puts 'Please insert some data'
   end
 end
+
+def save_student(name, age, parent_permission)
+  obj = {
+    type: 'Student',
+    name: name,
+    age: age,
+    parent_permission: parent_permission
+  }
+
+  if File.exist?('./data/people.json')
+    file = File.open('./data/people.json')
+
+    if file.size.zero?
+      student = [obj]
+    else
+      student = JSON.parse(File.read('./data/people.json'))
+      student << obj
+    end
+
+    file.close
+
+    myfile = File.open('./data/people.json', 'w')
+    myfile.write(JSON.pretty_generate(student))
+    myfile.close
+  end
+end
