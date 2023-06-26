@@ -70,11 +70,11 @@ def load_people
   end
 end
 
-def save_student(name, age, parent_permission)
+def save_student(age, name, parent_permission)
   obj = {
     type: 'Student',
-    name: name,
     age: age,
+    name: name,
     parent_permission: parent_permission
   }
 
@@ -96,7 +96,7 @@ def save_student(name, age, parent_permission)
   end
 end
 
-def save_teacher(name, age, specialization)
+def save_teacher(specialization, age, name)
   obj = {
     type: 'Teacher',
     specialization: specialization,

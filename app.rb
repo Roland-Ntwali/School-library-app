@@ -99,7 +99,7 @@ class App
 
     # create a teacher and push it to people array
     @people.push(Teacher.new(specialization, age, name))
-    save_teacher(specialization, name, age)
+    save_teacher(specialization, age, name)
   end
 
   # create a person
@@ -154,7 +154,7 @@ class App
     # create the book object and add it to the books list
     Rental.new(date, @books[book_option], @people[person_option])
 
-    save_rentals(date, @books[selected_book], @people[selected_person])
+    save_rentals(date, @books[book_option], @people[person_option])
     # success message
     puts 'Rental created successfully'
   end

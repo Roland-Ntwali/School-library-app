@@ -1,21 +1,21 @@
 [
   {
     "type": "Student",
-    "name": "22",
-    "age": "Ouail",
+    "name": "Ouail",
+    "age": "22",
     "parent_permission": false
   },
   {
     "type": "Student",
-    "name": "22",
-    "age": "Roland",
+    "name": "Roland",
+    "age": "22",
     "parent_permission": false
   },
   {
     "type": "Teacher",
-    "specialization": "50",
-    "name": "Web",
-    "age": "Chris",
+    "specialization": "Web",
+    "name": "Chris",
+    "age": "50",
     "parent_permission": true
   }
 ]

@@ -1,12 +1,12 @@
 [
-    {
-      "date": "2023-04-26",
-      "person": "Ouail",
-      "book": "Broken Glass"
-    },
-    {
-      "date": "2023-06-26",
-      "person": "Roland",
-      "book": "Broken Glass"
-    }
+  {
+    "date": "2023-06-01",
+    "person": "Roland",
+    "book": "Broken Glass"
+  },
+  {
+    "date": "2020-02-01",
+    "person": "Ouail",
+    "book": "The Tipping Point"
+  }
 ]
