@@ -2,6 +2,7 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
+require_relative './data/data'
 
 class App
   def initialize
@@ -21,6 +22,12 @@ class App
 
     # list of people
     @people = []
+  end
+
+  def load_data
+    load_books
+    load_people
+    load_rentals
   end
 
   # display commands
@@ -76,6 +83,7 @@ class App
 
     # create a student and push it to people array
     @people.push(Student.new('11', age, name, parent_permission: parent_permission))
+    save_student(age, name, parent_permission)
   end
 
   # create a teacher
@@ -91,6 +99,7 @@ class App
 
     # create a teacher and push it to people array
     @people.push(Teacher.new(specialization, age, name))
+    save_teacher(specialization, name, age)
   end
 
   # create a person
@@ -118,6 +127,7 @@ class App
 
     # create the book object and add it to the books list
     @books.push(Book.new(title, author))
+    save_book(title, author)
 
     # success message
     puts 'Book created successfully'
@@ -144,6 +154,7 @@ class App
     # create the book object and add it to the books list
     Rental.new(date, @books[book_option], @people[person_option])
 
+    save_rentals(date, @books[selected_book], @people[selected_person])
     # success message
     puts 'Rental created successfully'
   end
