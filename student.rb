@@ -10,7 +10,7 @@ class Student < Person
     @classroom = classroom
   end
 
-  # method
+  # methods
   def play_hooky
     '¯\(ツ)/¯'
   end
