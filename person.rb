@@ -4,21 +4,18 @@ require_relative 'trimmer_decorator'
 require_relative 'rental'
 
 class Person < Nameable
-  # getters & setters
-  attr_reader :id
-  attr_accessor :name, :age, :rentals
-
   # constructor
   def initialize(age, name = 'Unknown', parent_permission: true)
     super()
     @id = Random.rand(1..1000)
     @name = name
-    @age = age
+    @age = age.to_i
     @parent_permission = parent_permission
     @rentals = []
   end
 
-  # private method
+  attr_accessor :name, :age, :rentals, :id
+
   def of_age?
     @age >= 18
   end
@@ -34,8 +31,7 @@ class Person < Nameable
     @name
   end
 
-  # add rental method
-  def add_rental(date, book)
+  def rent(date, book)
     Rental.new(date, book, self)
   end
 end

@@ -1,8 +1,4 @@
 class Rental
-  # setters & getters
-  attr_reader :book, :parent_permission
-  attr_accessor :date
-
   # constructor
   def initialize(date, book, person)
     @date = date
@@ -11,4 +7,7 @@ class Rental
     @person = person
     person.rentals << self
   end
+
+  attr_accessor :date
+  attr_reader :book, :person
 end
