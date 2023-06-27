@@ -1,169 +1,63 @@
-require_relative '../book'
-require_relative '../person'
-require_relative '../student'
-require_relative '../teacher'
-require_relative '../app'
 require 'json'
+require 'pry'
 
-def load_books
-  if File.exist?('./data/books.json')
-    file = File.open('./data/books.json')
-
-    # File.empty?(path)
-    if File.empty?('./data/books.json')
-      'If this is your first time using our app, kindly add some books first.'
-    else
-      books = JSON.parse(File.read('./data/books.json'))
-
-      books.each do |book|
-        book = Book.new(book['title'], book['author'])
-        @books << book
-      end
-    end
-    file.close
+class Database
+  def self.save(books, people, rentals)
+    save_books(books)
+    save_people(people)
+    save_rentals(rentals)
   end
-end
 
-def save_book(title, author)
-  obj = {
-    title: title,
-    author: author
-  }
+  def self.save_books(books)
+    return if books.nil?
 
-  if File.exist?('./data/books.json')
-    file = File.open('./data/books.json')
+    booksdata = './data/books.json'
+    records = read_existing_data(booksdata)
 
-    if File.empty?('./data/books.json')
-      book = [obj]
-    else
-      book = JSON.parse(File.read('./data/books.json'))
-      book << obj
+    books.each do |book|
+      next if records.any? { |r| r['title'] == book.title && r['author'] == book.author && r['id'] == book.id }
+
+      records << { title: book.title, author: book.author, id: book.id }
     end
 
-    file.close
-
-    myfile = File.open('./data/books.json', 'w')
-    myfile.write(JSON.pretty_generate(book))
-    myfile.close
+    File.write(booksdata, JSON.generate(records))
   end
-end
 
-def load_people
-  if File.exist?('./data/people.json')
-    file = File.open('./data/people.json')
-    if File.empty?('./data/people.json')
-      puts 'Please add people data if this is your first time visiting our app'
-    else
-      people = JSON.parse(File.read('./data/people.json'))
-      people.each do |person|
-        if person['option'] == 'Student'
-          student = Student.new(person['age'], person['name'])
-          @people << student
-        else
-          teacher = Teacher.new(person['specialization'], person['age'], person['name'])
-          @people << teacher
-        end
-      end
+  def self.save_people(people)
+    return if people.nil?
+
+    peopledata = './data/people.json'
+    records = read_existing_data(peopledata)
+
+    people.each do |person|
+      next if records.any? { |r| r['id'] == person.id && r['name'] == person.name }
+
+      records << { class: person.class, name: person.name, id: person.id, age: person.age,
+                   parent_permission: person.can_use_services? }
     end
-    file.close
-  else
-    puts 'Please insert some data'
+    File.write(peopledata, JSON.generate(records))
   end
-end
 
-def save_student(age, name, parent_permission)
-  obj = {
-    type: 'Student',
-    age: age,
-    name: name,
-    parent_permission: parent_permission
-  }
+  def self.save_rentals(rentals)
+    return if rentals.nil?
 
-  if File.exist?('./data/people.json')
-    file = File.open('./data/people.json')
+    rentalsdata = './data/rentals.json'
+    records = read_existing_data(rentalsdata)
 
-    if File.empty?('./data/people.json')
-      student = [obj]
-    else
-      student = JSON.parse(File.read('./data/people.json'))
-      student << obj
+    rentals.each do |rental|
+      next if records.any? do |r|
+                r['person_id'] == rental.person.id && r['book_id'] == rental.book.id && r['date'] == rental.date
+              end
+
+      records << { date: rental.date, book_id: rental.book.id, person_id: rental.person.id }
     end
 
-    file.close
-
-    myfile = File.open('./data/people.json', 'w')
-    myfile.write(JSON.pretty_generate(student))
-    myfile.close
+    File.write(rentalsdata, JSON.generate(records))
   end
-end
 
-def save_teacher(specialization, age, name)
-  obj = {
-    type: 'Teacher',
-    specialization: specialization,
-    name: name,
-    age: age,
-    parent_permission: true
-  }
+  def self.read_existing_data(data)
+    return [] unless File.exist?(data) && !File.empty?(data)
 
-  if File.exist?('./data/people.json')
-    file = File.open('./data/people.json')
-
-    if File.empty?('./data/people.json')
-      teacher = [obj]
-    else
-      teacher = JSON.parse(File.read('./data/people.json'))
-      teacher << obj
-    end
-
-    file.close
-
-    myfile = File.open('./data/people.json', 'w')
-    myfile.write(JSON.pretty_generate(teacher))
-    myfile.close
-  end
-end
-
-def load_rentals
-  if File.exist?('./data/rentals.json')
-    file = File.open('./data/rentals.json')
-
-    if File.empty?('./data/rentals.json')
-      puts 'Please add some books first'
-    else
-      rentals = JSON.parse(File.read('./data/rentals.json'))
-      puts 'Reserved books: '
-      rentals.each do |rental|
-        puts "Name: #{rental['person']}, Book: #{rental['book']} on: #{rental['date']}"
-      end
-    end
-    file.close
-  else
-    puts 'No reservations found, please reseve some books first'
-  end
-end
-
-def save_rentals(date, book, person)
-  obj = {
-    date: date,
-    person: person.name,
-    book: book.title
-  }
-
-  if File.exist?('./data/rentals.json')
-    file = File.open('./data/rentals.json')
-
-    if File.empty?('./data/rentals.json')
-      rental = [obj]
-    else
-      rental = JSON.parse(File.read('./data/rentals.json'))
-      rental << obj
-    end
-
-    file.close
-
-    myfile = File.open('./data/rentals.json', 'w')
-    myfile.write(JSON.pretty_generate(rental))
-    myfile.close
+    JSON.parse(File.read(data))
   end
 end

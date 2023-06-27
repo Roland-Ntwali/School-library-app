@@ -1,12 +1,1 @@
-[
-  {
-    "date": "2023-06-01",
-    "person": "Roland",
-    "book": "Broken Glass"
-  },
-  {
-    "date": "2020-02-01",
-    "person": "Ouail",
-    "book": "The Tipping Point"
-  }
-]
+[{"date":"2020-02-01","book_id":554,"person_id":1},{"date":"2023-06-01","book_id":684,"person_id":960}]
