@@ -2,32 +2,15 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
+require_relative 'data/loaddata'
 
 class App
   def initialize
-    # print commands
-    @cmd = {
-      '1': 'List all books',
-      '2': 'List all people',
-      '3': 'Create a person',
-      '4': 'Creat a book',
-      '5': 'Create a rental',
-      '6': 'List all rentals for a given person id',
-      '7': 'Exit'
-    }
+    @books = LoadData.load_books
 
-    # list of books
-    @books = []
+    @people = LoadData.load_people
 
-    # list of people
-    @people = []
-  end
-
-  # display commands
-  def display_cmd
-    @cmd.each do |index, command|
-      puts "#{index} - #{command}"
-    end
+    @rentals = LoadData.load_rentals
   end
 
   # print out all books
@@ -52,10 +35,9 @@ class App
     end
   end
 
-  # print out all people with numbers
-  def list_all_person_with_numbers
+  def list_all_people_with_index
     @people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index}. [#{person.class}] Name: #{person.name}, ID #{person.id}, Age: #{person.age}"
     end
   end
 
@@ -118,22 +100,19 @@ class App
 
     # create the book object and add it to the books list
     @books.push(Book.new(title, author))
-
     # success message
     puts 'Book created successfully'
   end
 
   # create a rental
   def create_rental()
-    # select book
-    puts 'Select a book from the following list by number: '
+    puts 'Select a book from the list by number'
     list_all_books
     book_option = gets.chomp.to_i
     puts
 
-    # select person
-    puts 'Select a person from the following list by number (not id): '
-    list_all_person_with_numbers
+    puts 'Select a book from the following list by number: '
+    list_all_people_with_index
     person_option = gets.chomp.to_i
     puts
 
@@ -141,57 +120,26 @@ class App
     print 'Date: '
     date = gets.chomp
 
-    # create the book object and add it to the books list
-    Rental.new(date, @books[book_option], @people[person_option])
+    @rentals.push(Rental.new(date, @books[book_option], @people[person_option]))
 
     # success message
-    puts 'Rental created successfully'
+    puts 'Rental Created Successfully'
   end
 
   # list all rentals for a given person id
   def rentals_of_person()
-    # select person
+    puts 'All people in the system'
+    list_all_people
     print 'Id of person: '
     id = gets.chomp.to_i
-    person_arr = @people.select { |person| person.id == id }
+    person = @people.find { |p| p.id == id }
 
-    # print rentals for that person
-    if person_arr.empty?
-      puts 'No person matches the given ID!'
-    else
-      person_arr[0].rentals.each do |rental|
-        puts "Date: #{rental.date}, Book #{rental.book.title} by #{rental.book.author}"
+    if person
+      @rentals.each do |rental|
+        puts "Date #{rental.date}, Book: #{rental.book.title} Author: #{rental.book.author}" if rental.person.id == id
       end
-    end
-  end
-
-  # options
-  def choose_option(input)
-    case input
-    when '1' then list_all_books
-    when '2' then list_all_people
-    when '3' then create_person
-    when '4' then create_book
-    when '5' then create_rental
-    when '6' then rentals_of_person
-    end
-  end
-
-  # user option selector
-  def user_option_executer
-    input = gets.chomp
-
-    if input == '7'
-      exit
     else
-      choose_option(input)
+      puts 'No person matches the given ID!'
     end
-  end
-
-  # run the program
-  def run
-    puts 'Please choose an option by entering a number: '
-    display_cmd
-    user_option_executer
   end
 end
