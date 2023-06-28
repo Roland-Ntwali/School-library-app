@@ -86,6 +86,12 @@ gem install
 - GitHub: [Roland-Ntwali](https://github.com/Roland-Ntwali)
 - LinkedIn: [roland-ntwali](https://www.linkedin.com/in/roland-ntwali/)
 
+ 👤 **Ouail Laarabi**
+ 
+ - GitHub: [Click here](https://github.com/Ouail-01?tab=overview&from=2023-01-01&to=2023-01-02)
+ - Twitter: [Click here](https://twitter.com/Ouail_Laarabi)
+ - LinkedIn: [Click here](https://www.linkedin.com/in/ouail-laarabi-53203b250/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
