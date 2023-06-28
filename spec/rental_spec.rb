@@ -19,5 +19,5 @@ puts "Book: #{rental.book.title} by #{rental.book.author}"
 puts "Person: #{rental.person.name}, Age: #{rental.person.age}"
 
 # Access rentals from book and person objects
-puts "Rentals of the book: #{book.rentals.map { |r| r.date }}"
-puts "Rentals of the person: #{person.rentals.map { |r| r.date }}"
+puts "Rentals of the book: #{book.rentals.map(&:date)}"
+puts "Rentals of the person: #{person.rentals.map(&:date)}"
