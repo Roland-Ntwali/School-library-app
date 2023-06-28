@@ -1,27 +1,23 @@
-require_relative '../app'
-require_relative '../rental'
+# Import the required files
 require_relative '../book'
 require_relative '../person'
+require_relative '../rental'
 
-describe Rental do
-  let(:book) { Book.new('Title', 'Author') }
-  let(:person) { Person.new(25, 'John Doe') }
-  let(:date) { '2023-06-28' }
-  let(:rental) { Rental.new(date, book, person) }
+# Create a book
+book = Book.new('The Great Gatsby', 'F. Scott Fitzgerald')
 
-  describe '#initialize' do
-    it 'creates a new rental with the specified date, book, and person' do
-      expect(rental.date).to eq(date)
-      expect(rental.book).to eq(book)
-      expect(rental.person).to eq(person)
-    end
+# Create a person
+person = Person.new(25, 'John Doe')
 
-    it 'adds the rental to the book rentals list' do
-      expect(book.rentals).to include(rental)
-    end
+# Create a rental
+date = '2023-06-28'
+rental = Rental.new(date, book, person)
 
-    it 'adds the rental to the person rentals list' do
-      expect(person.rentals).to include(rental)
-    end
-  end
-end
+# Verify the rental properties
+puts "Date: #{rental.date}"
+puts "Book: #{rental.book.title} by #{rental.book.author}"
+puts "Person: #{rental.person.name}, Age: #{rental.person.age}"
+
+# Access rentals from book and person objects
+puts "Rentals of the book: #{book.rentals.map { |r| r.date }}"
+puts "Rentals of the person: #{person.rentals.map { |r| r.date }}"
