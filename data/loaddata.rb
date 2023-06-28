@@ -1,5 +1,5 @@
 require 'json'
-require 'pry'
+require 'pty'
 
 class LoadData
   def self.load_books
