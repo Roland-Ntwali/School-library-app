@@ -1,23 +1,32 @@
-# Import the required files
+# Install the 'rspec' gem if you haven't already
+# Run the tests using the 'rspec' command in your terminal
+
+# rental_spec.rb
+require_relative '../rental'
 require_relative '../book'
 require_relative '../person'
-require_relative '../rental'
 
-# Create a book
-book = Book.new('The Great Gatsby', 'F. Scott Fitzgerald')
+RSpec.describe Rental do
+  let(:book) { Book.new('The Great Gatsby', 'F. Scott Fitzgerald') }
+  let(:person) { Person.new(25, 'John Doe') }
+  let(:date) { '2023-06-28' }
+  subject(:rental) { Rental.new(date, book, person) }
 
-# Create a person
-person = Person.new(25, 'John Doe')
+  describe '#date' do
+    it 'returns the rental date' do
+      expect(rental.date).to eq(date)
+    end
+  end
 
-# Create a rental
-date = '2023-06-28'
-rental = Rental.new(date, book, person)
+  describe '#book' do
+    it 'returns the rented book' do
+      expect(rental.book).to eq(book)
+    end
+  end
 
-# Verify the rental properties
-puts "Date: #{rental.date}"
-puts "Book: #{rental.book.title} by #{rental.book.author}"
-puts "Person: #{rental.person.name}, Age: #{rental.person.age}"
-
-# Access rentals from book and person objects
-puts "Rentals of the book: #{book.rentals.map(&:date)}"
-puts "Rentals of the person: #{person.rentals.map(&:date)}"
+  describe '#person' do
+    it 'returns the person who rented the book' do
+      expect(rental.person).to eq(person)
+    end
+  end
+end
