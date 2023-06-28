@@ -1,7 +1,7 @@
-require_relative '../app'  # Add this line if necessary
-require_relative '../rental'  # Add this line to load the Rental class
-require_relative '../book'  # Add this line to load the Book class
-require_relative '../person'  # Add this line to load the Person class
+require_relative '../app'
+require_relative '../rental'
+require_relative '../book'
+require_relative '../person'
 
 describe Rental do
   let(:book) { Book.new('Title', 'Author') }
